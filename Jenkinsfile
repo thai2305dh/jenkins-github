@@ -14,7 +14,7 @@ pipeline{
         
         stage('Docker Build'){
             steps{
-                sh "docker build . -t thai2305/image:${DOCKER_TAG} "
+                sh "docker build . -t thai2305/nginx:${DOCKER_TAG} "
             }
         }
         
@@ -24,7 +24,7 @@ pipeline{
                     sh "docker login -u thai2305 -p ${dockerHubPwd}"
                 }
                 
-                sh "docker push thai2305/image:${DOCKER_TAG} "
+                sh "docker push thai2305/nginx:${DOCKER_TAG} "
             }
         }
         
