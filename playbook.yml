@@ -2,8 +2,8 @@
 - hosts: client
   become: True
   tasks:
-    
-    - name: Install docker
+
+    - name: Install docker for client
       apt:
         name: docker-ce
         state: present
