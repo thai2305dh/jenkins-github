@@ -22,4 +22,7 @@
         image: "thai2305/nginx:{{DOCKER_TAG}}"
         state: started
         published_ports:
-          - 0.0.0.0:8080:80
+          - 0.0.0.0:8080:8080
+          - 0.0.0.0:50000:50000
+    - name: config gitlab
+      
