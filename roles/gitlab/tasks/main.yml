@@ -1,0 +1,38 @@
+- name: Create gitlab directories
+  file: path={{ item }} recurse=yes state=directory
+  with_items:
+    - "{{ gitlab_config_dir }}"
+    - "{{ gitlab_logs_dir }}"
+    - "{{ gitlab_data_dir }}"
+
+- name: Install Gitlab container
+  docker:
+    name: gitlab
+    image: "{{ gitlab_image }}"
+    state: started
+    published_ports:
+      - 0.0.0.0:80:80
+      - 0.0.0.0:443:443
+      - 0.0.0.0:2222:22
+    volumes:
+      - "{{ gitlab_config_dir }}:/etc/gitlab"
+      - "{{ gitlab_logs_dir }}:/var/log/gitlab"
+      - "{{ gitlab_data_dir }}:/var/opt/gitlab"
+    restart_policy: always
+
+- name: deploy gitlab configuration
+  template: src=gitlab.rb.j1 dest="{{ gitlab_config_dir }}/gitlab.rb" owner=root group=root mode=0644
+- name: start the container
+  docker_container:
+    name: image
+    image: "{{ gitlab_image }}"
+    state: started
+
+# - name: deploy gitlab NGINX configuration
+#   template: src=nginx.conf.j2 dest=/etc/nginx/sites-available/gitlab.conf owner=root group=root mode=0644
+
+# - name: Enable gitlab NGINX configuration
+#   file: src=/etc/nginx/sites-available/gitlab.conf dest=/etc/nginx/sites-enabled/gitlab.conf state=link
+
+# - name: Restart NGINX
+#   service: name=nginx state=restarted

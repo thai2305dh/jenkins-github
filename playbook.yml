@@ -1,48 +1,50 @@
----
 - hosts: client
-  become: True
-  tasks:
-    - name: install pip3
-      apt: 
-        name: python3-pip 
-        state: present 
-    - name: Add Docker GPG apt Key
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        state: present
+  become: true
+  # become_user: root
+  roles:
+    - docker
+    - gitlab
+# ---
+# - hosts: client
+#   become: True
+#   tasks:
+#     - name: install pip3
+#       apt: 
+#         name: python3-pip 
+#         state: present 
+#     - name: Add Docker GPG apt Key
+#       apt_key:
+#         url: https://download.docker.com/linux/ubuntu/gpg
+#         state: present
 
-    - name: Add Docker Repository
-      apt_repository:
-        repo: deb https://download.docker.com/linux/ubuntu focal stable
-        state: present
+#     - name: Add Docker Repository
+#       apt_repository:
+#         repo: deb https://download.docker.com/linux/ubuntu focal stable
+#         state: present
 
-    - name: Update apt and install docker-ce
-      apt:
-        name: docker-ce
-        state: latest
-        update_cache: true
+#     - name: Update apt and install docker-ce
+#       apt:
+#         name: docker-ce
+#         state: latest
+#         update_cache: true
 
-    - name: Install Docker Module for Python
-      pip:
-        name: docker
-    # - name: Install docker for client
-    #   apt:
-    #     name: docker-ce
-    #     state: present
-    - name: start docker
-      service:
-        name: docker
-        state: started
-        enabled: yes
-    - name: Install docker-py python module
-      pip:
-        name: docker-py
-        state: absent
-    - name: start the container
-      docker_container:
-        name: image
-        image: "thai2305/gitlab:{{DOCKER_TAG}}"
-        state: started
-        published_ports:
-          - 0.0.0.0:80:80
-          # - 0.0.0.0:50000:50
+#     - name: Install Docker Module for Python
+#       pip:
+#         name: docker
+#     - name: start docker
+#       service:
+#         name: docker
+#         state: started
+#         enabled: yes
+#     # - name: Install docker-py python module
+#     #   pip:
+#     #     name: docker-py
+#     #     state: absent
+#     - name: start the container
+#       docker_container:
+#         name: image
+#         image: "thai2305/gitlab:{{DOCKER_TAG}}"
+#         state: started
+#         published_ports:
+#           - 0.0.0.0:80:80
+#           # - 0.0.0.0:50000:50
