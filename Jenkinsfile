@@ -1,7 +1,7 @@
 pipeline{
     agent any
     environment {
-      DOCKER_TAG = getImage()
+      DOCKER_TAG = lates //getImage()
     }
     stages{
         stage('SCM'){
@@ -23,7 +23,7 @@ pipeline{
                     sh "docker login -u thai2305 -p ${dockerHubPwd}"
                 }
                 
-                sh "docker push thai2305/gitlab:${DOCKER_TAG} "
+                sh "docker push thai2305/gitlab2:${DOCKER_TAG} "
             }
         }
         
@@ -35,8 +35,8 @@ pipeline{
     }
 }
 
-def getImage(){
-    def commitHash = sh label: '', returnStdout: true, script: 'git rev-parse --short HEAD'
-    return commitHash
-}
+#def getImage(){
+#    def commitHash = sh label: '', returnStdout: true, script: 'git rev-parse --short HEAD'
+#    return commitHash
+#}
 
