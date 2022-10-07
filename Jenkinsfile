@@ -13,7 +13,7 @@ pipeline{
          
         stage('Docker Build'){
             steps{
-                sh "docker build . -t thai2305/gitlab:${DOCKER_TAG} "
+                sh "docker build . -t thai2305/gitlab2:${DOCKER_TAG} "
             }
         }
         
