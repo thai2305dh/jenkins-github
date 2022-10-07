@@ -5,7 +5,7 @@
     - "{{ gitlab_logs_dir }}"
     - "{{ gitlab_data_dir }}"
 
-- name: Install Gitlab container
+- name: Install Thai-Gitlab container
   docker:
     name: gitlab
     image: "{{ gitlab_image }}"
