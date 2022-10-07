@@ -1,7 +1,7 @@
 pipeline{
     agent any
     environment {
-      DOCKER_TAG = lates //getImage()
+      DOCKER_TAG = getImage()
     }
     stages{
         stage('SCM'){
@@ -35,8 +35,8 @@ pipeline{
     }
 }
 
-# def getImage(){
-#    def commitHash = sh label: '', returnStdout: true, script: 'git rev-parse --short HEAD'
-#    return commitHash
-# }
+def getImage(){
+    def commitHash = sh label: '', returnStdout: true, script: 'git rev-parse --short HEAD'
+    return commitHash
+}
 
